@@ -5,6 +5,23 @@ provider:
   name: aws
   runtime: nodejs14.x
 
+resources:
+  # CloudFormation template syntax from here on.
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: baseTable
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S
+        KeySchema:
+          - AttributeName: name
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
 functions:
   baseAdd:
     handler: src/endpoints/base/add.add
@@ -13,6 +30,17 @@ functions:
           path: /base/add
           method: post
 
+custom:
+  dynamodb:
+    stages:
+      - dev
+    start:
+      docker: true
+      port: 8000
+      inMemory: true
+      migrate: true
+
 plugins:
   - serverless-esbuild
   - serverless-offline
+  - serverless-dynamodb-local
