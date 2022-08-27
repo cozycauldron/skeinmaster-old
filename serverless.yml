@@ -1,0 +1,18 @@
+service: skeinmaster-api
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  baseAdd:
+    handler: src/endpoints/base/add.add
+    events:
+      - httpApi:
+          path: /base/add
+          method: post
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
