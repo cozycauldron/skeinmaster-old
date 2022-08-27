@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "dev": "sls offline start"
+  },
   "devDependencies": {
     "esbuild": "^0.15.5",
     "serverless": "^3.22.0",
