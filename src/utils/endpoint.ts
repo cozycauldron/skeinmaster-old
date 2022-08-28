@@ -18,9 +18,8 @@ type EndpointFunction<R extends Record<string, unknown>, T> = (
  * schema, etc.
  */
 export const endpoint = <
-  R extends Record<string, unknown>,
-  T extends z.ZodRawShape = z.ZodRawShape,
-  S extends z.ZodObject<T> = z.ZodObject<T>,
+  R extends Record<string, any>,
+  S extends z.ZodObject<R> = z.ZodObject<R>,
   P extends z.infer<S> = z.infer<S>,
   F extends EndpointFunction<R, P> = EndpointFunction<R, P>
 >(
@@ -32,9 +31,9 @@ export const endpoint = <
       // TODO: IAM Check
 
       const eventBody =
-        event.requestContext["http"]?.method === "GET"
+        (event.requestContext as any)["http"]?.method === "GET"
           ? event.queryStringParameters
-          : JSON.parse(event.body);
+          : JSON.parse((event as any).body);
 
       const validPayload = await schema.parseAsync(eventBody);
 

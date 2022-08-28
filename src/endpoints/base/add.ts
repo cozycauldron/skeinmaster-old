@@ -1,34 +1,14 @@
+import { addSchema } from "schemas";
 import { endpoint } from "utils";
-import { Fiber } from "enums";
-import { z } from "zod";
+import * as base from "dynamo/base";
 
-const schema = z.object({
-  name: z.string().min(1),
-  mill: z.string().min(1),
-  pricePerSkein: z.number().min(1),
-  yards: z.number().min(50),
-  grams: z.number().min(25),
-  ply: z.number().min(0).max(10).optional(),
-  notes: z.string().optional(),
-  fibers: z
-    .object({
-      type: z.nativeEnum(Fiber),
-      percent: z.number().max(100),
-    })
-    .array()
-    .min(1)
-    .max(5),
-});
-
-export const add = endpoint(schema, async ({ payload }) => {
-  console.log("----------------------------");
-  console.log(payload);
-  console.log("----------------------------");
+export const add = endpoint(addSchema, async ({ payload }) => {
+  const result = await base.write(payload);
 
   return {
     statusCode: 200,
     body: {
-      foo: "bar",
+      added: { [result.id]: result },
     },
   };
 });
