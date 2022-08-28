@@ -5,6 +5,14 @@ provider:
   name: aws
   runtime: nodejs14.x
 
+functions:
+  baseAdd:
+    handler: src/endpoints/base/add.add
+    events:
+      - httpApi:
+          path: /base/add
+          method: post
+
 resources:
   # CloudFormation template syntax from here on.
   Resources:
@@ -21,14 +29,6 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-
-functions:
-  baseAdd:
-    handler: src/endpoints/base/add.add
-    events:
-      - httpApi:
-          path: /base/add
-          method: post
 
 custom:
   dynamodb:

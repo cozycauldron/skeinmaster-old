@@ -3,11 +3,17 @@
     "dev": "sls offline start"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.102",
+    "@types/node": "^18.7.13",
+    "aws-lambda": "^1.0.7",
     "esbuild": "^0.15.5",
     "serverless": "^3.22.0",
     "serverless-dynamodb-local": "^0.2.40",
     "serverless-esbuild": "^1.32.8",
     "serverless-offline": "^9.2.6",
     "typescript": "^4.8.2"
+  },
+  "dependencies": {
+    "zod": "^3.18.0"
   }
 }

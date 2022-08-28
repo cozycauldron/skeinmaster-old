@@ -5,3 +5,11 @@ jspm_packages
 .dynamodb
 
 .DS_Store
+
+########################################
+# These are ignored because we're using pNPM.
+# We absolutely want a lock file, its just not
+# either one of these!
+package-lock.json
+yarn.lock
+########################################
