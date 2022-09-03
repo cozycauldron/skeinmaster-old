@@ -1,6 +1,7 @@
 import { Endpoint } from "types";
 import { HandlerResponse } from "types";
 import z from "zod";
+import { aws as dynamoose } from "dynamoose";
 
 type EndpointInput<T> = {
   payload: T;
@@ -26,6 +27,19 @@ export const endpoint = <
   schema: S,
   fn: F
 ) => {
+  // Initialize dynamo connection
+  // TODO: Remote vs Local
+  dynamoose.ddb.local();
+
+  // Create new DynamoDB instance
+  // const ddb = new dynamoose.ddb.DynamoDB({
+  // "accessKeyId": "AKID",
+  // "secretAccessKey": "SECRET",
+  // "region": "us-east-1"
+  // });
+  // Set DynamoDB instance to the Dynamoose DDB instance
+  // dynamoose.ddb.set(ddb);
+
   const method: Endpoint = async (event, context) => {
     try {
       // TODO: IAM Check
@@ -60,7 +74,7 @@ export const endpoint = <
         statusCode: 500,
         body: JSON.stringify({
           error: "Internal Server Error.",
-          details: {},
+          details: e,
         }),
       };
     }

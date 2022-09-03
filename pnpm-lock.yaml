@@ -2,9 +2,11 @@ lockfileVersion: 5.4
 
 specifiers:
   '@aws-sdk/client-dynamodb': ^3.159.0
+  '@aws-sdk/util-dynamodb': ^3.159.0
   '@types/aws-lambda': ^8.10.102
   '@types/node': ^18.7.13
   aws-lambda: ^1.0.7
+  dynamoose: ^3.0.3
   esbuild: ^0.15.5
   nanoid: ^4.0.0
   serverless: ^3.22.0
@@ -16,6 +18,8 @@ specifiers:
 
 dependencies:
   '@aws-sdk/client-dynamodb': 3.159.0
+  '@aws-sdk/util-dynamodb': 3.159.0
+  dynamoose: 3.0.3
   nanoid: 4.0.0
   zod: 3.18.0
 
@@ -620,6 +624,13 @@ packages:
       '@aws-sdk/node-config-provider': 3.159.0
       '@aws-sdk/property-provider': 3.159.0
       '@aws-sdk/types': 3.159.0
+      tslib: 2.4.0
+    dev: false
+
+  /@aws-sdk/util-dynamodb/3.159.0:
+    resolution: {integrity: sha512-TIExSz6m4+aBW4xTirUdjPH54GcAe+/p+JlfogGQ8AJ8xelTm2A5Ch/PYPnIukDglLfCfxM4QmZsOKP/13zCCg==}
+    engines: {node: '>= 12.0.0'}
+    dependencies:
       tslib: 2.4.0
     dev: false
 
@@ -2060,6 +2071,23 @@ packages:
       tar: 4.4.19
     dev: true
 
+  /dynamoose-utils/3.0.3:
+    resolution: {integrity: sha512-Y3TpFdBTt/m0w1hTUToMl8qX/bujqiBsG/sDf6DPR1NTKHokqZ2QTrmC67oVPXqCDCmKn1Vw6QUsaiVoojPPSg==}
+    dependencies:
+      js-object-utilities: 2.1.0
+    dev: false
+
+  /dynamoose/3.0.3:
+    resolution: {integrity: sha512-8UAjwiQPdmFoEJx/WZbtNaroSNViIEf/3I0WYx3f0fAeWKZ/l+xVWs5O8lqJizuDBC/qjOzSebH+jnncKxWPFA==}
+    dependencies:
+      '@aws-sdk/client-dynamodb': 3.159.0
+      '@aws-sdk/util-dynamodb': 3.159.0
+      dynamoose-utils: 3.0.3
+      js-object-utilities: 2.1.0
+    transitivePeerDependencies:
+      - aws-crt
+    dev: false
+
   /eastasianwidth/0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
@@ -3227,6 +3255,10 @@ packages:
     resolution: {integrity: sha512-9FzQjJ7MATs1tSpnco1K6ayiYE3figslrXA72G2HQ/n76RzvYlofyi5QM+iX4YRs/pu3yzxlVQSST23+dMDknw==}
     engines: {node: '>= 0.6.0'}
     dev: true
+
+  /js-object-utilities/2.1.0:
+    resolution: {integrity: sha512-X62npvVTfyNELV4gPU4jJSzFZbdxk3zH/FxlBrZ6n+AGKpGyhMpsPs00tjtqTLy582zG4bvaG5fuKMm/zA1gng==}
+    dev: false
 
   /js-string-escape/1.0.1:
     resolution: {integrity: sha512-Smw4xcfIQ5LVjAOuJCvN/zIodzA/BBSsluuoSykP+lUvScIi4U6RJLfwHet5cxFnCswUjISV8oAXaqaJDY3chg==}

@@ -7,14 +7,15 @@ provider:
 
 functions:
   baseAdd:
-    handler: src/endpoints/base/add.add
+    handler: src/endpoints/base.add
     events:
-      - httpApi:
-          path: /base/add
-          method: post
+      - httpApi: { path: /base/add, method: post }
+  baseGet:
+    handler: src/endpoints/base.get
+    events:
+      - httpApi: { path: /base/get, method: get }
 
 resources:
-  # CloudFormation template syntax from here on.
   Resources:
     usersTable:
       Type: AWS::DynamoDB::Table
