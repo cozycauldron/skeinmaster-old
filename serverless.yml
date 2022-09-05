@@ -1,9 +1,12 @@
 service: skeinmaster-api
+useDotenv: true
 frameworkVersion: "3"
 
 provider:
   name: aws
   runtime: nodejs14.x
+  environment:
+    MONGO_CONNECTION_STRING: ${env:MONGO_CONNECTION_STRING}
 
 functions:
   baseAdd:
@@ -15,33 +18,9 @@ functions:
     events:
       - httpApi: { path: /base/get, method: get }
 
-resources:
-  Resources:
-    usersTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: baseTable
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-
-custom:
-  dynamodb:
-    stages:
-      - dev
-    start:
-      docker: true
-      port: 8000
-      inMemory: true
-      migrate: true
+resources: {}
+custom: {}
 
 plugins:
   - serverless-esbuild
   - serverless-offline
-  - serverless-dynamodb-local

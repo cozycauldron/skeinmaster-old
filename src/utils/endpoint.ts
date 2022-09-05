@@ -1,7 +1,6 @@
-import { Endpoint } from "types";
-import { HandlerResponse } from "types";
+import { Endpoint, HandlerResponse } from "src/types";
 import z from "zod";
-import { aws as dynamoose } from "dynamoose";
+import mongoose from "mongoose";
 
 type EndpointInput<T> = {
   payload: T;
@@ -27,22 +26,19 @@ export const endpoint = <
   schema: S,
   fn: F
 ) => {
-  // Initialize dynamo connection
-  // TODO: Remote vs Local
-  dynamoose.ddb.local();
-
-  // Create new DynamoDB instance
-  // const ddb = new dynamoose.ddb.DynamoDB({
-  // "accessKeyId": "AKID",
-  // "secretAccessKey": "SECRET",
-  // "region": "us-east-1"
-  // });
-  // Set DynamoDB instance to the Dynamoose DDB instance
-  // dynamoose.ddb.set(ddb);
-
   const method: Endpoint = async (event, context) => {
     try {
+      const connectionString = process.env.MONGO_CONNECTION_STRING;
+      if (!connectionString) {
+        console.log("asdf", process.env);
+        throw new Error(
+          `Environment variable "MONGO_CONNECTION_STRING" not configured properly.`
+        );
+      }
+
       // TODO: IAM Check
+
+      mongoose.connect(connectionString);
 
       const eventBody =
         (event.requestContext as any)["http"]?.method === "GET"
@@ -74,9 +70,15 @@ export const endpoint = <
         statusCode: 500,
         body: JSON.stringify({
           error: "Internal Server Error.",
-          details: e,
+          details: {
+            message: (e as any)?.message,
+            // TODO: Restrict to dev mode
+            // stack: (e as any)?.stack,
+          },
         }),
       };
+    } finally {
+      mongoose.disconnect();
     }
   };
 

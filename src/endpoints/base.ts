@@ -1,10 +1,9 @@
-import { addSchema } from "schemas";
-import { endpoint } from "utils";
-import { Base } from "models/Base";
-import { getSchema } from "schemas/base/getSchema";
+import { endpoint } from "src/utils/endpoint";
+import { addSchema, getSchema } from "src/schemas/baseSchemas";
+import Base from "src/entities/Base";
 
 export const add = endpoint(addSchema, async ({ payload }) => {
-  const base = await Base.create(payload);
+  const base = await (await Base.create(payload)).save();
 
   return {
     statusCode: 200,
@@ -13,7 +12,8 @@ export const add = endpoint(addSchema, async ({ payload }) => {
 });
 
 export const get = endpoint(getSchema, async ({ payload }) => {
-  const base = await Base.get(payload.id);
+  const query = Base.findOne({ _id: payload.id });
+  const base = await query.exec();
 
   return {
     statusCode: 200,

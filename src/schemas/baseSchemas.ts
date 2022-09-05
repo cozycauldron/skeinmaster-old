@@ -1,9 +1,9 @@
-import { Fibers } from "enums";
+import { Fibers } from "src/types/enums";
 import { z } from "zod";
 
 export const addSchema = z.object({
   name: z.string().min(1),
-  mill: z.string().min(1),
+  millId: z.string().min(1),
   pricePerSkein: z.number().min(1),
   yards: z.number().min(50),
   grams: z.number().min(25),
@@ -17,4 +17,8 @@ export const addSchema = z.object({
     .array()
     .min(1)
     .max(5),
+});
+
+export const getSchema = z.object({
+  id: z.string(),
 });
