@@ -1,6 +1,6 @@
 import { Endpoint, HandlerResponse } from "src/types";
 import z from "zod";
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 
 type EndpointInput<T> = {
   payload: T;
@@ -38,7 +38,7 @@ export const endpoint = <
 
       // TODO: IAM Check
 
-      mongoose.connect(connectionString);
+      // mongoose.connect(connectionString);
 
       const eventBody =
         (event.requestContext as any)["http"]?.method === "GET"
@@ -78,7 +78,7 @@ export const endpoint = <
         }),
       };
     } finally {
-      mongoose.disconnect();
+      // mongoose.disconnect();
     }
   };
 

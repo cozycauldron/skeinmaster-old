@@ -6,7 +6,7 @@ provider:
   name: aws
   runtime: nodejs14.x
   environment:
-    MONGO_CONNECTION_STRING: ${env:MONGO_CONNECTION_STRING}
+    DB_CONNECTION_STRING: ${env:DB_CONNECTION_STRING}
 
 functions:
   baseAdd:

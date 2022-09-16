@@ -1,0 +1,110 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+// ========================
+// Models
+// ========================
+
+model User {
+  id        String         @id @default(cuid())
+  email     String         @unique
+  role      String         @default("user")
+  name      String?
+  colorways Colorway[]
+  yarnBases UserYarnBase[]
+  orders    Order[]
+}
+
+model YarnBase {
+  id           String         @id @default(cuid())
+  millId       String
+  mill         Mill           @relation(fields: [millId], references: [id])
+  name         String         @db.VarChar(255)
+  grams        Int            @default(100)
+  yards        Int
+  ply          Int
+  bases        UserYarnBase[]
+  dyedBases    UserDyedBase[]
+}
+
+model UserYarnBase {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  baseId String
+  base   YarnBase @relation(fields: [baseId], references: [id])
+
+  stockCount Int      @default(0)
+  updatedAt  DateTime @updatedAt
+}
+
+model Colorway {
+  id           String         @id @default(cuid())
+  name         String
+  notes        String
+  userId       String
+  user         User           @relation(fields: [userId], references: [id])
+  UserDyedBase UserDyedBase[]
+}
+
+model UserDyedBase {
+  id            String          @id @default(cuid())
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  colorwayId    String
+  colorway      Colorway        @relation(fields: [colorwayId], references: [id])
+  yarnBaseId    String
+  yarnBase      YarnBase        @relation(fields: [yarnBaseId], references: [id])
+  OrderDyedBase OrderDyedBase[]
+}
+
+model OrderDyedBase {
+  id             String              @id @default(cuid())
+  userDyedBaseId String
+  userDyedBase   UserDyedBase        @relation(fields: [userDyedBaseId], references: [id])
+  quantity       Int
+  status         OrderDyedBaseStatus
+  Order          Order              @relation(fields: [orderId], references: [id])
+  orderId        String
+}
+
+enum OrderDyedBaseStatus {
+  TODO
+  DOING
+  DONE
+}
+
+model Order {
+  id     String          @id @default(cuid())
+  userId String
+  user   User            @relation(fields: [userId], references: [id])
+  bases  OrderDyedBase[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Mill {
+  id       String     @id @default(cuid())
+  name     String     @unique
+  location String?
+  bases    YarnBase[]
+}
+
+// model Dye {
+//   id           String @id @default(cuid())
+//   manufacturer String
+//   name         String
+
+//   @@unique([manufacturer, name])
+// }
+
+// Not Models
