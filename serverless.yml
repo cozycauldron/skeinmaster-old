@@ -6,7 +6,7 @@ provider:
   name: aws
   runtime: nodejs14.x
   environment:
-    DB_CONNECTION_STRING: ${env:DB_CONNECTION_STRING}
+    DATABASE_URL: ${env:DATABASE_URL}
 
 functions:
   baseAdd:

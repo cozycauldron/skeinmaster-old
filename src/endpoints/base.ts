@@ -1,9 +1,22 @@
 import { endpoint } from "src/utils/endpoint";
 import { addSchema, findSchema, getSchema } from "src/schemas/baseSchemas";
-import Base from "src/entities/Base";
+import { prisma } from "src/prisma";
 
 export const add = endpoint(addSchema, async ({ payload }) => {
-  const base = await (await Base.create(payload)).save();
+  // const mill = await prisma.mill.findFirst({ where: { id: payload.millId } });
+
+  // if (!mill) {
+  //   throw new Error(`Mill with the id of "${payload.millId}" was not found.`);
+  // }
+
+  const base = await prisma.yarnBase.create({
+    data: {
+      name: payload.name,
+      ply: payload.ply,
+      yards: payload.yards,
+      mill: { connect: { id: payload.millId } },
+    },
+  });
 
   return {
     statusCode: 200,
@@ -12,8 +25,13 @@ export const add = endpoint(addSchema, async ({ payload }) => {
 });
 
 export const get = endpoint(getSchema, async ({ payload }) => {
-  const query = Base.findOne({ _id: payload.id });
-  const base = await query.exec();
+  const base = await prisma.yarnBase.findFirstOrThrow({
+    where: {
+      id: {
+        equals: payload.id,
+      },
+    },
+  });
 
   return {
     statusCode: 200,

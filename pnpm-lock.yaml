@@ -1,11 +1,15 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@prisma/client': ^4.3.1
   '@swc/core': ^1.2.247
   '@types/aws-lambda': ^8.10.102
+  '@types/kill-port': ^2.0.0
   '@types/node': ^18.7.13
   aws-lambda: ^1.0.7
+  chalk: '4'
   esbuild: ^0.15.5
+  kill-port: ^2.0.1
   prisma: ^4.3.1
   serverless: ^3.22.0
   serverless-dynamodb-local: ^0.2.40
@@ -16,14 +20,18 @@ specifiers:
   zod: ^3.18.0
 
 dependencies:
+  '@prisma/client': 4.3.1_prisma@4.3.1
   zod: 3.18.0
 
 devDependencies:
   '@swc/core': 1.2.247
   '@types/aws-lambda': 8.10.102
+  '@types/kill-port': 2.0.0
   '@types/node': 18.7.13
   aws-lambda: 1.0.7
+  chalk: 4.1.2
   esbuild: 0.15.5
+  kill-port: 2.0.1
   prisma: 4.3.1
   serverless: 3.22.0
   serverless-dynamodb-local: 0.2.40
@@ -351,10 +359,27 @@ packages:
       fastq: 1.13.0
     dev: true
 
+  /@prisma/client/4.3.1_prisma@4.3.1:
+    resolution: {integrity: sha512-FA0/d1VMJNWqzU7WVWTNWJ+lGOLR9JUBnF73GdIPAEVo/6dWk4gHx0EmgeU+SMv4MZoxgOeTBJF2azhg7x0hMw==}
+    engines: {node: '>=14.17'}
+    requiresBuild: true
+    peerDependencies:
+      prisma: '*'
+    peerDependenciesMeta:
+      prisma:
+        optional: true
+    dependencies:
+      '@prisma/engines-version': 4.3.0-32.c875e43600dfe042452e0b868f7a48b817b9640b
+      prisma: 4.3.1
+    dev: false
+
+  /@prisma/engines-version/4.3.0-32.c875e43600dfe042452e0b868f7a48b817b9640b:
+    resolution: {integrity: sha512-8yWpXkQRmiSfsi2Wb/ZS5D3RFbeu/btL9Pm/gdF4phB0Lo5KGsDFMxFMgaD64mwED2nHc8ZaEJg/+4Jymb9Znw==}
+    dev: false
+
   /@prisma/engines/4.3.1:
     resolution: {integrity: sha512-4JF/uMaEDAPdcdZNOrnzE3BvrbGpjgV0FcPT3EVoi6I86fWkloqqxBt+KcK/+fIRR0Pxj66uGR9wVH8U1Y13JA==}
     requiresBuild: true
-    dev: true
 
   /@serverless/dashboard-plugin/6.2.2_supports-color@8.1.1:
     resolution: {integrity: sha512-h3zOprpuWZCdAP7qoOKT2nboB+AaxMkGoSzOD0jIBpt9s0cXqLE2VFjR2vKn8Cvam47Qa3XYnT2/XN6tR6rZgQ==}
@@ -680,6 +705,13 @@ packages:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
       '@types/node': 18.7.13
+    dev: true
+
+  /@types/kill-port/2.0.0:
+    resolution: {integrity: sha512-AegaqABFauES4++49NeNX7TyZJ7t48t10+qJn4QGVGQqDogEk89M0iI4W0HXS+TEUk/hYAtEsgJ+6nyuSyYxlw==}
+    dependencies:
+      '@types/node': 18.7.13
+      shell-exec: 1.0.2
     dev: true
 
   /@types/lodash/4.14.184:
@@ -2334,6 +2366,10 @@ packages:
       get-intrinsic: 1.1.2
     dev: true
 
+  /get-them-args/1.3.2:
+    resolution: {integrity: sha512-LRn8Jlk+DwZE4GTlDbT3Hikd1wSHgLMme/+7ddlqKd7ldwR6LjJgTVWzBnR01wnYGe4KgrXjg287RaI22UHmAw==}
+    dev: true
+
   /glob-parent/5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
     engines: {node: '>= 6'}
@@ -2907,6 +2943,14 @@ packages:
     dependencies:
       compress-brotli: 1.3.8
       json-buffer: 3.0.1
+    dev: true
+
+  /kill-port/2.0.1:
+    resolution: {integrity: sha512-e0SVOV5jFo0mx8r7bS29maVWp17qGqLBZ5ricNSajON6//kmb7qqqNnml4twNE8Dtj97UQD+gNFOaipS/q1zzQ==}
+    hasBin: true
+    dependencies:
+      get-them-args: 1.3.2
+      shell-exec: 1.0.2
     dev: true
 
   /lazystream/1.0.1:
@@ -3637,7 +3681,6 @@ packages:
     requiresBuild: true
     dependencies:
       '@prisma/engines': 4.3.1
-    dev: true
 
   /process-nextick-args/2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
@@ -4042,6 +4085,10 @@ packages:
   /shebang-regex/3.0.0:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
+    dev: true
+
+  /shell-exec/1.0.2:
+    resolution: {integrity: sha512-jyVd+kU2X+mWKMmGhx4fpWbPsjvD53k9ivqetutVW/BQ+WIZoDoP4d8vUMGezV6saZsiNoW2f9GIhg9Dondohg==}
     dev: true
 
   /side-channel/1.0.4:

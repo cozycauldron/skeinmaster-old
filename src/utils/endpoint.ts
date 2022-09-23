@@ -28,11 +28,11 @@ export const endpoint = <
 ) => {
   const method: Endpoint = async (event, context) => {
     try {
-      const connectionString = process.env.MONGO_CONNECTION_STRING;
+      const connectionString = process.env.DATABASE_URL;
       if (!connectionString) {
         console.log("asdf", process.env);
         throw new Error(
-          `Environment variable "MONGO_CONNECTION_STRING" not configured properly.`
+          `Environment variable "DATABASE_URL" not configured properly.`
         );
       }
 
